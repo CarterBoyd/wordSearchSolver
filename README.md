@@ -7,6 +7,6 @@ unlike the java version which takes the dictionary txt file and adds those words
 list. Where the first linked list is just a 27 node linked list from A - Z to signify the first letter for every word.
 Inside the alphabet linked list is the real list of every word that starts with that letter.
 
-#Possible changes
+# Possible changes
 I might want to change the way the linked list for the alphabet by remaking it as a binary tree. I just need to change
 the data structure.
