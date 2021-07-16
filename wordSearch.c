@@ -104,15 +104,15 @@ static void bottomToTop(char grid[width][height]) {
  * @param grid the grid that will be parsed
  */
 static void leftToRightDiag(char grid[width][height]) {
-
+    //TODO implement code into this function to work properly
 }
 
 /**
  * Goes through the grid from a diagonal top right to bottom left method
- * @param grid the grid that will be parseed
+ * @param grid the grid that will be parsed
  */
 static void rightToLeftDiag(char grid[width][height]) {
-
+    //TODO implement code so that diagonal code will work
 }
 
 /**
