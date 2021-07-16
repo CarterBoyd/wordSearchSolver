@@ -197,6 +197,17 @@ static void freeAll() {
     }
 }
 
+/**
+ * prints the board of the grid
+ * @param grid the grid being printed
+ */
+static void printPuzzle(char grid[width][height]) {
+    char *ptr;
+    printf("\nThis is the puzzle\n\n");
+    for (ptr = *grid; *ptr; ptr += width + 1)
+        printf("%s\n", ptr);
+}
+
 int main(int argc, char *argv[]) {
     clock_t begin = clock();
 
@@ -218,6 +229,7 @@ int main(int argc, char *argv[]) {
         }
         grid[width][0] = '\0';
         fclose(gridFile);
+        printPuzzle(grid);
         leftToRight(grid);
         rightToLeft(grid);
         topToBottom(grid);
