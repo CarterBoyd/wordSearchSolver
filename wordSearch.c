@@ -7,7 +7,6 @@
 /**
  * Checks the word for any of the word is in the dictionary
  * @param word the word being checked for in the dictionary
- * @return 1 if the dictionary file was not found. 0 if function ran fine
  */
 static void checkLine(char *word) {
     struct letterList *letterPtr;
@@ -25,9 +24,8 @@ static void checkLine(char *word) {
  * takes the line and cuts it off at length then re adds it after the line is checked
  * @param length the length of the line that is going to be cut off
  * @param line the line being cut
- * @param direction the direction the line was going
  */
-void lineChange(int length, char *line) {
+static void lineChange(int length, char *line) {
     char temp;
     temp = line[length];
     line[length] = '\0';
@@ -38,7 +36,6 @@ void lineChange(int length, char *line) {
 /**
  * Goes through the grid from a left to right top to bottom method
  * @param grid the grid that will be parsed
- * @return 1 if the checkline file had an error, and 0 if there were no errors
  */
 static void leftToRight(char grid[width][height]) {
     char *line;
@@ -53,7 +50,6 @@ static void leftToRight(char grid[width][height]) {
 /**
  * Goes through the grid from a left to right top to bottom method
  * @param grid the grid that will be parsed
- * @return 1 if the checkline file had an error, and 0 if there were no errors
  */
 static void rightToLeft(char grid[width][height]) {
     char *line, backwards[height + 1], *ptr;
@@ -72,7 +68,6 @@ static void rightToLeft(char grid[width][height]) {
 /**
  * Goes through the grid from a left to right top to bottom method
  * @param grid the grid that will be parsed
- * @return 1 if the checkline file had an error, and 0 if there were no errors
  */
 static void topToBottom(char grid[width][height]) {
     char line[width + 1], *ptr;
@@ -90,7 +85,6 @@ static void topToBottom(char grid[width][height]) {
 /**
  * Goes through the grid from a left to right top to bottom method
  * @param grid the grid that will be parsed
- * @return 1 if the checkline file had an error, and 0 if there were no errors
  */
 static void bottomToTop(char grid[width][height]) {
     char line[width + 1], *ptr;
@@ -103,6 +97,22 @@ static void bottomToTop(char grid[width][height]) {
             for (i = MIN_SIZE; *(ptr + i); ++i)
                 lineChange(i, ptr);
     }
+}
+
+/**
+ * Goes through the grid from a diagonal top left to bottom right method
+ * @param grid the grid that will be parsed
+ */
+static void leftToRightDiag(char grid[width][height]) {
+
+}
+
+/**
+ * Goes through the grid from a diagonal top right to bottom left method
+ * @param grid the grid that will be parseed
+ */
+static void rightToLeftDiag(char grid[width][height]) {
+
 }
 
 /**
@@ -212,6 +222,8 @@ int main(int argc, char *argv[]) {
         rightToLeft(grid);
         topToBottom(grid);
         bottomToTop(grid);
+        leftToRightDiag(grid);
+        rightToLeftDiag(grid);
         freeAll();
 
         clock_t end = clock();
