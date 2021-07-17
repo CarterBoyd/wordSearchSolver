@@ -38,13 +38,13 @@ static void lineChange(int length, char *line) {
  * @param grid the grid that will be parsed
  */
 static void leftToRight(char **grid) {
-    char *line;
-    int i = 0, j;
+    char *linePtr, **arrayPtr;
+    int i;
     printf("\nLooking for words going left to right\n");
-    for (line = *grid; i < width; line += 3, ++i)
-        for (; *(line + MIN_SIZE - 1); ++line)
-            for (j = MIN_SIZE; *(line + j - 1); ++j)
-                lineChange(j, line);
+    for (arrayPtr = grid; *arrayPtr; ++arrayPtr)
+        for (linePtr = *arrayPtr; *linePtr; ++linePtr)
+            for (i = MIN_SIZE; *(arrayPtr + i - 1); ++i)
+                lineChange(i, linePtr);
 }
 
 /**
@@ -52,17 +52,19 @@ static void leftToRight(char **grid) {
  * @param grid the grid that will be parsed
  */
 static void rightToLeft(char **grid) {
-    char *line, backwards[height + 1], *ptr;
-    int i, j;
+    char *linePtr, **arrayPtr, *backwards;
+    int i;
+    backwards = malloc(strlen(*grid) * sizeof(char));
     printf("\nLooking for words going right to left\n");
-    for (line = *grid, i = 0; i < width; line += width + 1, ++i) {
-        for (j = height; j > 0; --j)
-            backwards[height - j] = line[j - 1];
-        backwards[height] = '\0';
-        for (ptr = backwards; *(ptr + 2); ++ptr)
-            for (j = MIN_SIZE; *(ptr + j - 1); ++j)
-                lineChange(j, ptr);
+    for (arrayPtr = grid; *arrayPtr; ++arrayPtr) {
+        for (linePtr = *arrayPtr, i = 0; i < height; ++i)
+            backwards[i] = linePtr[height - i - 1];
+        backwards[strlen(backwards)] = '\0';
+        for (; *(backwards + 2); ++backwards)
+            for (i = MIN_SIZE; *(backwards + i - 1); ++i)
+                lineChange(i, backwards);
     }
+    free(backwards);
 }
 
 /**
@@ -227,7 +229,7 @@ char **createGrid(char *link) {
     fscanf(gridFile, "%d %d", &width, &height);
     wordSearchGrid = malloc(width * height * sizeof(wordSearchGrid));
     for (int i = 0; i < height; ++i) {
-        line = malloc( height * sizeof(char));
+        line = malloc(height * sizeof(char));
         for (int j = 0; j < height; ++j) {
             fscanf(gridFile, "%2s", letter);
             *(line + j) = *letter;
