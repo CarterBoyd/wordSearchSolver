@@ -228,9 +228,9 @@ char **createGrid(char *link) {
         line = malloc(height * sizeof(char));
         for (int j = 0; j < height; ++j) {
             fscanf(gridFile, "%2s", letter);
-            *(line + j) = *letter;
+            line[j] = *letter;
         }
-        *(line + height) = '\0';
+        line[height] = '\0';
         *(wordSearchGrid + i) = line;
     }
     *(*(wordSearchGrid) + width) = '\0';
