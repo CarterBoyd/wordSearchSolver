@@ -234,11 +234,6 @@ char **createGrid(char *link) {
 }
 
 int main(int argc, char *argv[]) {
-    clock_t begin = clock();
-
-    argc = 3;
-    argv[1] = "/Users/carterslaptop/CLionProjects/wordSearch/fourtyexample.txt";
-    argv[2] = "/Users/carterslaptop/CLionProjects/wordSearch/dictionary.txt";
     if (argc > 2) {
         createDictionary(argv[2]);
         char **grid = createGrid(argv[1]);
@@ -250,10 +245,6 @@ int main(int argc, char *argv[]) {
         leftToRightDiag(grid);
         rightToLeftDiag(grid);
         freeAll();
-
-        clock_t end = clock();
-        double time_spent = (double) (end - begin) / CLOCKS_PER_SEC;
-        printf("%f", time_spent);
         return EXIT_SUCCESS;
     }
     fprintf(stdout, "requires 2 arguments, there are %d\n", argc - 1);
