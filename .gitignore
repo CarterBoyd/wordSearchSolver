@@ -1,2 +1,5 @@
 # Project exclude paths
 /cmake-build-debug/
+/specExample.txt
+/dictionary.txt
+/fourtyexample.txt
