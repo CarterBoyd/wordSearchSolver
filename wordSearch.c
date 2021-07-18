@@ -52,12 +52,12 @@ static void leftToRight(char **grid) {
  */
 static void rightToLeft(char **grid) {
     char *linePtr, **arrayPtr, backwards[strlen(*grid) + 1], *ptr;
+    backwards[strlen(*grid)] = '\0';
     int i;
     printf("\nLooking for words going right to left\n");
     for (arrayPtr = grid; *arrayPtr; ++arrayPtr) {
         for (linePtr = *arrayPtr, i = 0; i < height; ++i)
             backwards[i] = linePtr[height - i - 1];
-        backwards[strlen(*grid)] = '\0';
         for (ptr = backwards; *(ptr + MIN_SIZE - 1); ++ptr)
             lineChange(ptr);
     }
@@ -68,13 +68,13 @@ static void rightToLeft(char **grid) {
  * @param grid the grid that will be parsed
  */
 static void topToBottom(char **grid) {
-    char line[strlen(*grid) + 1], *ptr;
+    char line[height + 1], *ptr;
+    line[height] = '\0';
     int i, j;
     printf("\nLooking for words going top to bottom\n");
     for (j = 0; j < width; ++j) {
         for (i = 0; i < height; ++i)
             line[i] = grid[i][j];
-        line[height] = '\0';
         for (ptr = line; *(ptr + MIN_SIZE - 1); ++ptr)
             lineChange(ptr);
     }
@@ -86,12 +86,12 @@ static void topToBottom(char **grid) {
  */
 static void bottomToTop(char **grid) {
     char line[width + 1], *ptr;
+    line[width] = '\0';
     int i, j;
     printf("\nLooking for words going bottom to top\n");
     for (j = 0; j < width; ++j) {
         for (i = height; i > 0; --i)
             line[i - 1] = grid[height - i][j];
-        line[width] = '\0';
         for (ptr = line; *(ptr + MIN_SIZE - 1); ++ptr)
             lineChange(ptr);
     }
