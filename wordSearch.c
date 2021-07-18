@@ -247,18 +247,18 @@ int main(int argc, char *argv[]) {
     clock_t begin = clock();
 
     argc = 3;
-    argv[1] = "/Users/carterslaptop/CLionProjects/wordSearch/specExample.txt";
+    argv[1] = "/Users/carterslaptop/CLionProjects/wordSearch/fourtyexample.txt";
     argv[2] = "/Users/carterslaptop/CLionProjects/wordSearch/dictionary.txt";
     if (argc - 1 == 2) {
         createDictionary(argv[2]);
         char **grid = createGrid(argv[1]);
         printPuzzle(grid);
-//        leftToRight(grid);
-//        rightToLeft(grid);
-//        topToBottom(grid);
-//        bottomToTop(grid);
+        leftToRight(grid);
+        rightToLeft(grid);
+        topToBottom(grid);
+        bottomToTop(grid);
         leftToRightDiag(grid);
-//        rightToLeftDiag(grid);
+        rightToLeftDiag(grid);
         freeAll();
 
         clock_t end = clock();
