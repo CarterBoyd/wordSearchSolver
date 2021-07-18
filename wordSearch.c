@@ -106,13 +106,18 @@ static void leftToRightDiag(char **grid) {
     int i, j, k;
     printf("\nLooking for words going diagonally left to right\n");
     for (i = MIN_SIZE - 1; i < width; ++i) {
-        for (j = i, k = 0; j >= 0; --j, ++k) {
-            ptr = grid[j];
+        for (j = i, k = 0; j >= 0; --j, ++k)
             line[k] = grid[j][k];
-        }
+        line[k] = '\0';
         for (ptr = line; *(ptr + MIN_SIZE - 1); ++ptr)
-            for (i = MIN_SIZE; *(ptr + i); ++i)
                 lineChange(ptr);
+    }
+    for (i = 1; i < height - 2; ++i) {
+        for (j = i, k = 0; j < height; ++j, ++k)
+            line[k] = grid[height - k - 1][j];
+        line[k] = '\0';
+        for (ptr = line; *(ptr + MIN_SIZE - 1); ++ptr)
+            lineChange(ptr);
     }
 }
 
@@ -242,17 +247,17 @@ int main(int argc, char *argv[]) {
     clock_t begin = clock();
 
     argc = 3;
-    argv[1] = "/Users/carterslaptop/CLionProjects/wordSearch/fourtyexample.txt";
+    argv[1] = "/Users/carterslaptop/CLionProjects/wordSearch/specExample.txt";
     argv[2] = "/Users/carterslaptop/CLionProjects/wordSearch/dictionary.txt";
     if (argc - 1 == 2) {
         createDictionary(argv[2]);
         char **grid = createGrid(argv[1]);
         printPuzzle(grid);
-        leftToRight(grid);
-        rightToLeft(grid);
-        topToBottom(grid);
-        bottomToTop(grid);
-//        leftToRightDiag(grid);
+//        leftToRight(grid);
+//        rightToLeft(grid);
+//        topToBottom(grid);
+//        bottomToTop(grid);
+        leftToRightDiag(grid);
 //        rightToLeftDiag(grid);
         freeAll();
 
