@@ -2,7 +2,6 @@
 // Created by Carter Boyd on 6/29/21.
 //
 #include "wordSearch.h"
-#include <time.h>
 
 /**
  * Checks the word for any of the word is in the dictionary
