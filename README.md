@@ -8,5 +8,4 @@ list. Where the first linked list is just a 27 node linked list from A - Z to si
 Inside the alphabet linked list is the real list of every word that starts with that letter.
 
 # Possible changes
-I might want to change the way the linked list for the alphabet by remaking it as a binary tree. I just need to change
-the data structure.
+i should make the letter list an array with 27 for every letter
