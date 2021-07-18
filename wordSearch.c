@@ -126,7 +126,23 @@ static void leftToRightDiag(char **grid) {
  * @param grid the grid that will be parsed
  */
 static void rightToLeftDiag(char **grid) {
-    //TODO implement code so that diagonal code will work
+    char line[width + 1], *ptr;
+    int i, j, k;
+    printf("\nLooking for words going diagonally right to left\n");
+    for (i = width - MIN_SIZE; i >= 0; --i) {
+        for (j = i, k = 0; j < height; ++j, ++k)
+            line[k] = grid[j][height - k - 1];
+        line[k] = '\0';
+        for (ptr = line; *(ptr + MIN_SIZE - 1); ++ptr)
+            lineChange(ptr);
+    }
+    for (i = height - MIN_SIZE - 1; i >= MIN_SIZE - 1; --i) {
+        for (j = i, k = 0; j >= 0; --j, ++k)
+            line[k] = grid[k][j];
+        line[k] = '\0';
+        for (ptr = line; *(ptr + MIN_SIZE - 1); ++ptr)
+            lineChange(ptr);
+    }
 }
 
 /**
@@ -249,7 +265,7 @@ int main(int argc, char *argv[]) {
     argc = 3;
     argv[1] = "/Users/carterslaptop/CLionProjects/wordSearch/fourtyexample.txt";
     argv[2] = "/Users/carterslaptop/CLionProjects/wordSearch/dictionary.txt";
-    if (argc - 1 == 2) {
+    if (argc > 2) {
         createDictionary(argv[2]);
         char **grid = createGrid(argv[1]);
         printPuzzle(grid);
