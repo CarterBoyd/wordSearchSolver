@@ -15,13 +15,7 @@ struct dictionary {
     struct dictionary *next;
 };
 
-struct letterList {
-    char letter;
-    struct letterList *nextLetter;
-    struct dictionary *list;
-};
-
-struct letterList *list = NULL;
+struct dictionary *list[26];
 const static int MIN_SIZE = 3;
 int width, height;
 

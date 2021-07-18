@@ -8,16 +8,14 @@
  * Checks the word for any of the word is in the dictionary
  * @param word the word being checked for in the dictionary
  */
-static void checkLine(char *word) {
-    struct letterList *letterPtr;
+static void checkLine(const char *word) {
     struct dictionary *dictPtr;
-    for (letterPtr = list; letterPtr != NULL; letterPtr = letterPtr->nextLetter)
-        if (letterPtr->letter == *word)
-            for (dictPtr = letterPtr->list; dictPtr != NULL; dictPtr = dictPtr->next)
-                if (strcmp(dictPtr->word, word) == 0) {
+    for (dictPtr = list[(int) *word - 97]; dictPtr != NULL; dictPtr = dictPtr->next) {
+        if (strcmp(dictPtr->word, word) == 0) {
                     printf("%s\n", dictPtr->word);
                     return;
                 }
+    }
 }
 
 /**
@@ -54,12 +52,12 @@ static void leftToRight(char **grid) {
  */
 static void rightToLeft(char **grid) {
     char *linePtr, **arrayPtr, backwards[strlen(*grid) + 1], *ptr;
+    backwards[strlen(*grid)] = '\0';
     int i;
     printf("\nLooking for words going right to left\n");
     for (arrayPtr = grid; *arrayPtr; ++arrayPtr) {
         for (linePtr = *arrayPtr, i = 0; i < height; ++i)
             backwards[i] = linePtr[height - i - 1];
-        backwards[strlen(backwards)] = '\0';
         for (ptr = backwards; *(ptr + MIN_SIZE - 1); ++ptr)
             lineChange(ptr);
     }
@@ -70,7 +68,8 @@ static void rightToLeft(char **grid) {
  * @param grid the grid that will be parsed
  */
 static void topToBottom(char **grid) {
-    char line[strlen(*grid) + 1], *ptr;
+    char line[height + 1], *ptr;
+    line[height] = '\0';
     int i, j;
     printf("\nLooking for words going top to bottom\n");
     for (j = 0; j < width; ++j) {
@@ -87,6 +86,7 @@ static void topToBottom(char **grid) {
  */
 static void bottomToTop(char **grid) {
     char line[width + 1], *ptr;
+    line[width] = '\0';
     int i, j;
     printf("\nLooking for words going bottom to top\n");
     for (j = 0; j < width; ++j) {
@@ -157,53 +157,31 @@ static void fileExists(FILE *pFile, char *string) {
     }
 }
 
+void addToList(const char *line) {
+    struct dictionary *newWord = malloc(sizeof(struct dictionary));
+    newWord->word = strdup(line);
+    newWord->next = list[(int) *line - 97];
+    list[(int) *line - 97] = newWord;
+}
+
 /**
  * creates the data structure that will be used to find words
  * @param link the dictionary link for the program
  */
 void createDictionary(char *link) {
-    int letter;
+    for (int i = 0; i < 26; ++i)
+        list[i] = NULL;
+
+    FILE *fp = fopen(link, "r");
     char *line = NULL;
     size_t sz;
-    FILE *ptr = fopen(link, "r");
-    fileExists(ptr, link);
-    struct dictionary *newDict;
-    for (letter = 97; letter < 123; ++letter) {
-        struct letterList *newLetter = malloc(sizeof(struct letterList));
-        newLetter->letter = (char) letter;
-        newLetter->nextLetter = NULL;
-        newLetter->list = NULL;
-        if (line != NULL) {
-            newDict = malloc(sizeof(struct dictionary));
-            newDict->word = strdup(line);
-            newDict->next = newLetter->list;
-            newLetter->list = newDict;
-        }
-        while (getline(&line, &sz, ptr) != EOF) {
-            if (*line >= 65 && *line <= 90)
-                *line += 32;
-            line[strlen(line) - 1] = '\0';
-            if (*line != (char) letter)
-                break;
-            newDict = malloc(sizeof(struct dictionary));
-            newDict->word = strdup(line);
-            if (newLetter->list == NULL) {
-                newLetter->list = newDict;
-            } else {
-                newDict->next = newLetter->list;
-                newLetter->list = newDict;
-            }
-        }
-        if (letter == 97)
-            list = newLetter;
-        else {
-            struct letterList *letterPtr = list;
-            while (letterPtr->nextLetter != NULL)
-                letterPtr = letterPtr->nextLetter;
-            letterPtr->nextLetter = newLetter;
-        }
+    while (getline(&line, &sz, fp) != EOF) {
+        if (*line >= 65 && *line <= 90)
+            *line += 32;
+        line[strlen(line) - 1] = '\0';
+        addToList(line);
     }
-    fclose(ptr);
+    fclose(fp);
 }
 
 /**
@@ -211,19 +189,15 @@ void createDictionary(char *link) {
  * @param piss the dictionary
  */
 static void freeAll() {
-    struct letterList *next;
-    struct dictionary *linkedListNext, *linkedListTemp;
-    while (list != NULL) {
-        next = list->nextLetter;
-        linkedListNext = list->list;
-        while (linkedListNext != NULL) {
-            linkedListTemp = linkedListNext->next;
-            free(linkedListNext->word);
-            free(linkedListNext);
-            linkedListNext = linkedListTemp;
+    struct dictionary *listPtr, *temp;
+    for (int i = 0; i < 26; ++i) {
+        temp = list[i];
+        while (temp != NULL) {
+            listPtr = temp->next;
+            free(temp->word);
+            free(temp);
+            temp = listPtr;
         }
-        free(list);
-        list = next;
     }
 }
 
