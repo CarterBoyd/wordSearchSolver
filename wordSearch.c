@@ -9,16 +9,15 @@
  */
 static void checkLine(const char *word) {
     struct dictionary *dictPtr;
-    for (dictPtr = list[(int) *word - 97]; dictPtr != NULL; dictPtr = dictPtr->next) {
+    for (dictPtr = list[(int) *word - 97]; dictPtr != NULL; dictPtr = dictPtr->next)
         if (strcmp(dictPtr->word, word) == 0) {
-                    printf("%s\n", dictPtr->word);
-                    return;
-                }
-    }
+            printf("%s\n", dictPtr->word);
+            return;
+        }
 }
 
 /**
- * takes the line and cuts it off at length then re adds it after the line is checked
+ * Takes the line and cuts it off at length then re adds it after the line is checked
  * @param length the length of the line that is going to be cut off
  * @param line the line being cut
  */
@@ -109,7 +108,7 @@ static void leftToRightDiag(char **grid) {
             line[k] = grid[j][k];
         line[k] = '\0';
         for (ptr = line; *(ptr + MIN_SIZE - 1); ++ptr)
-                lineChange(ptr);
+            lineChange(ptr);
     }
     for (i = 1; i < height - 2; ++i) {
         for (j = i, k = 0; j < height; ++j, ++k)
@@ -145,7 +144,7 @@ static void rightToLeftDiag(char **grid) {
 }
 
 /**
- * Makes sure that the file exists
+ * Makes sure that the file exists if not then it will end the program
  * @param pFile the file
  * @param string the name of the file
  */
@@ -156,7 +155,11 @@ static void fileExists(FILE *pFile, char *string) {
     }
 }
 
-void addToList(const char *line) {
+/**
+ * Adds the line into the linked list of the list
+ * @param line the line being added to the array
+ */
+static void addToList(const char *line) {
     struct dictionary *newWord = malloc(sizeof(struct dictionary));
     newWord->word = strdup(line);
     newWord->next = list[(int) *line - 97];
@@ -164,7 +167,7 @@ void addToList(const char *line) {
 }
 
 /**
- * creates the data structure that will be used to find words
+ * Creates the data structure that will be used to find words
  * @param link the dictionary link for the program
  */
 void createDictionary(char *link) {
@@ -212,7 +215,12 @@ static void printPuzzle(char **grid) {
         printf("%s\n", *gridPtr);
 }
 
-char **createGrid(char *link) {
+/**
+ * Creates the grid that will be used in the word search
+ * @param link the txt file containing the list
+ * @return a 2d pointer of the grid
+ */
+static char **createGrid(char *link) {
     char **wordSearchGrid, letter[3], *line;
     FILE *gridFile;
     gridFile = fopen(link, "r");
