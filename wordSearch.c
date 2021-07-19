@@ -172,6 +172,7 @@ void createDictionary(char *link) {
         list[i] = NULL;
 
     FILE *fp = fopen(link, "r");
+    fileExists(fp, link);
     char *line = NULL;
     size_t sz;
     while (getline(&line, &sz, fp) != EOF) {
@@ -246,6 +247,6 @@ int main(int argc, char *argv[]) {
         freeAll();
         return EXIT_SUCCESS;
     }
-    fprintf(stdout, "requires 2 arguments, there are %d\n", argc - 1);
+    fprintf(stderr, "requires 2 arguments, there are %d\n", argc - 1);
     return EXIT_FAILURE;
 }
