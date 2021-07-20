@@ -22,14 +22,15 @@ static void checkLine(const char *word) {
  * @param line the line being cut
  */
 static void lineChange(char *line) {
-    char temp;
+    char temp, *ptr;
     int length;
-    for (length = MIN_SIZE; *(line + length - 1); ++length) {
-        temp = line[length];
-        line[length] = '\0';
-        checkLine(line);
-        line[length] = temp;
-    }
+    for (ptr = line; *(ptr + MIN_SIZE - 1); ++ptr)
+        for (length = MIN_SIZE; *(ptr + length - 1); ++length) {
+            temp = ptr[length];
+            ptr[length] = '\0';
+            checkLine(ptr);
+            ptr[length] = temp;
+        }
 }
 
 /**
@@ -37,11 +38,10 @@ static void lineChange(char *line) {
  * @param grid the grid that will be parsed
  */
 static void leftToRight(char **grid) {
-    char *linePtr, **arrayPtr;
+    char **arrayPtr;
     printf("\nLooking for words going left to right\n");
     for (arrayPtr = grid; *arrayPtr; ++arrayPtr)
-        for (linePtr = *arrayPtr; *(linePtr + MIN_SIZE - 1); ++linePtr)
-            lineChange(linePtr);
+        lineChange(*arrayPtr);
 }
 
 /**
@@ -49,15 +49,14 @@ static void leftToRight(char **grid) {
  * @param grid the grid that will be parsed
  */
 static void rightToLeft(char **grid) {
-    char *linePtr, **arrayPtr, backwards[strlen(*grid) + 1], *ptr;
+    char *linePtr, **arrayPtr, backwards[strlen(*grid) + 1];
     backwards[strlen(*grid)] = '\0';
     int i;
     printf("\nLooking for words going right to left\n");
     for (arrayPtr = grid; *arrayPtr; ++arrayPtr) {
         for (linePtr = *arrayPtr, i = 0; i < height; ++i)
             backwards[i] = linePtr[height - i - 1];
-        for (ptr = backwards; *(ptr + MIN_SIZE - 1); ++ptr)
-            lineChange(ptr);
+        lineChange(backwards);
     }
 }
 
@@ -66,15 +65,14 @@ static void rightToLeft(char **grid) {
  * @param grid the grid that will be parsed
  */
 static void topToBottom(char **grid) {
-    char line[height + 1], *ptr;
+    char line[height + 1];
     line[height] = '\0';
     int i, j;
     printf("\nLooking for words going top to bottom\n");
     for (j = 0; j < width; ++j) {
         for (i = 0; i < height; ++i)
             line[i] = grid[i][j];
-        for (ptr = line; *(ptr + MIN_SIZE - 1); ++ptr)
-            lineChange(ptr);
+        lineChange(line);
     }
 }
 
@@ -83,15 +81,14 @@ static void topToBottom(char **grid) {
  * @param grid the grid that will be parsed
  */
 static void bottomToTop(char **grid) {
-    char line[width + 1], *ptr;
+    char line[width + 1];
     line[width] = '\0';
     int i, j;
     printf("\nLooking for words going bottom to top\n");
     for (j = 0; j < width; ++j) {
         for (i = height; i > 0; --i)
             line[i - 1] = grid[height - i][j];
-        for (ptr = line; *(ptr + MIN_SIZE - 1); ++ptr)
-            lineChange(ptr);
+        lineChange(line);
     }
 }
 
@@ -99,23 +96,21 @@ static void bottomToTop(char **grid) {
  * Goes through the grid from a diagonal top left to bottom right method
  * @param grid the grid that will be parsed
  */
-static void leftToRightDiag(char **grid) {
-    char line[width + 1], *ptr;
+static void bottomLeftToTopRightDiag(char **grid) {
+    char line[width + 1];
     int i, j, k;
     printf("\nLooking for words going diagonally left to right\n");
     for (i = MIN_SIZE - 1; i < width; ++i) {
         for (j = i, k = 0; j >= 0; --j, ++k)
             line[k] = grid[j][k];
         line[k] = '\0';
-        for (ptr = line; *(ptr + MIN_SIZE - 1); ++ptr)
-            lineChange(ptr);
+        lineChange(line);
     }
     for (i = 1; i < height - 2; ++i) {
         for (j = i, k = 0; j < height; ++j, ++k)
             line[k] = grid[height - k - 1][j];
         line[k] = '\0';
-        for (ptr = line; *(ptr + MIN_SIZE - 1); ++ptr)
-            lineChange(ptr);
+        lineChange(line);
     }
 }
 
@@ -123,23 +118,21 @@ static void leftToRightDiag(char **grid) {
  * Goes through the grid from a diagonal top right to bottom left method
  * @param grid the grid that will be parsed
  */
-static void rightToLeftDiag(char **grid) {
-    char line[width + 1], *ptr;
+static void topRightToBottomLeftDiag(char **grid) {
+    char line[width + 1];
     int i, j, k;
     printf("\nLooking for words going diagonally right to left\n");
     for (i = width - MIN_SIZE; i >= 0; --i) {
         for (j = i, k = 0; j < height; ++j, ++k)
             line[k] = grid[j][height - k - 1];
         line[k] = '\0';
-        for (ptr = line; *(ptr + MIN_SIZE - 1); ++ptr)
-            lineChange(ptr);
+        lineChange(line);
     }
     for (i = height - MIN_SIZE - 1; i >= MIN_SIZE - 1; --i) {
         for (j = i, k = 0; j >= 0; --j, ++k)
             line[k] = grid[k][j];
         line[k] = '\0';
-        for (ptr = line; *(ptr + MIN_SIZE - 1); ++ptr)
-            lineChange(ptr);
+        lineChange(line);
     }
 }
 
@@ -250,8 +243,8 @@ int main(int argc, char *argv[]) {
         rightToLeft(grid);
         topToBottom(grid);
         bottomToTop(grid);
-        leftToRightDiag(grid);
-        rightToLeftDiag(grid);
+        bottomLeftToTopRightDiag(grid);
+        topRightToBottomLeftDiag(grid);
         freeAll();
         return EXIT_SUCCESS;
     }
