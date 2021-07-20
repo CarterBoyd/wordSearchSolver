@@ -21,7 +21,7 @@ static void checkLine(const char *word) {
  * @param length the length of the line that is going to be cut off
  * @param line the line being cut
  */
-static void lineChange(char *line) {
+static void splitLine(char *line) {
     char temp, *ptr;
     int length;
     for (ptr = line; *(ptr + MIN_SIZE - 1); ++ptr)
@@ -41,7 +41,7 @@ static void leftToRight(char **grid) {
     char **arrayPtr;
     printf("\nLooking for words going left to right\n");
     for (arrayPtr = grid; *arrayPtr; ++arrayPtr)
-        lineChange(*arrayPtr);
+        splitLine(*arrayPtr);
 }
 
 /**
@@ -56,7 +56,7 @@ static void rightToLeft(char **grid) {
     for (arrayPtr = grid; *arrayPtr; ++arrayPtr) {
         for (linePtr = *arrayPtr, i = 0; i < height; ++i)
             backwards[i] = linePtr[height - i - 1];
-        lineChange(backwards);
+        splitLine(backwards);
     }
 }
 
@@ -72,7 +72,7 @@ static void topToBottom(char **grid) {
     for (j = 0; j < width; ++j) {
         for (i = 0; i < height; ++i)
             line[i] = grid[i][j];
-        lineChange(line);
+        splitLine(line);
     }
 }
 
@@ -88,7 +88,7 @@ static void bottomToTop(char **grid) {
     for (j = 0; j < width; ++j) {
         for (i = height; i > 0; --i)
             line[i - 1] = grid[height - i][j];
-        lineChange(line);
+        splitLine(line);
     }
 }
 
@@ -104,13 +104,13 @@ static void bottomLeftToTopRightDiag(char **grid) {
         for (j = i, k = 0; j >= 0; --j, ++k)
             line[k] = grid[j][k];
         line[k] = '\0';
-        lineChange(line);
+        splitLine(line);
     }
     for (i = 1; i < height - 2; ++i) {
         for (j = i, k = 0; j < height; ++j, ++k)
             line[k] = grid[height - k - 1][j];
         line[k] = '\0';
-        lineChange(line);
+        splitLine(line);
     }
 }
 
@@ -126,13 +126,13 @@ static void topRightToBottomLeftDiag(char **grid) {
         for (j = i, k = 0; j < height; ++j, ++k)
             line[k] = grid[j][height - k - 1];
         line[k] = '\0';
-        lineChange(line);
+        splitLine(line);
     }
     for (i = height - MIN_SIZE - 1; i >= MIN_SIZE - 1; --i) {
         for (j = i, k = 0; j >= 0; --j, ++k)
             line[k] = grid[k][j];
         line[k] = '\0';
-        lineChange(line);
+        splitLine(line);
     }
 }
 
