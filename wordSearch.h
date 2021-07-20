@@ -16,7 +16,7 @@ struct dictionary {
 };
 
 struct dictionary *list[26];
-const static int MIN_SIZE = 3;
+#define MIN_SIZE 3
 int width, height;
 
 #endif //WORDSEARCH_WORDSEARCH_H
