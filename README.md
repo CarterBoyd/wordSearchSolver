@@ -2,10 +2,10 @@
 Word Search program in C
 
 This is a word search program designed in C that was originally created in 2019 when I was first learning java.
-Compared to the java version this one will be able to go diagonally so that it can complete the real wordSearch process.
-unlike the java version which takes the dictionary txt file and adds those words to a set this method uses a 2D linked
-list. Where the first linked list is just a 27 node linked list from A - Z to signify the first letter for every word.
-Inside the alphabet linked list is the real list of every word that starts with that letter.
-
-# Possible changes
-i should make the letter list an array with 27 for every letter
+Compared to the java version this one will be able to go diagonally making it a complete word search. The program
+requires two files in the line arguement in order to work
+[gridExample.txt](https://github.com/CarterBoyd/wordSearch/files/6844801/specExample.txt) is what the grid should
+look like in order for the program to work.
+[dictionary.txt](https://github.com/CarterBoyd/wordSearch/files/6844802/dictionary.txt) is an add on of a ton of
+words, the size of the dictionary file will be what determines how long the program will run (it took 2 seconds
+on my laptop when making this and using a 40 x 40 sized grid.
