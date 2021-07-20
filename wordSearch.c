@@ -164,7 +164,8 @@ static void addToList(const char *line) {
  * @param link the dictionary link for the program
  */
 void createDictionary(char *link) {
-    for (int i = 0; i < 26; ++i)
+    int i;
+    for (i = 0; i < 26; ++i)
         list[i] = NULL;
 
     FILE *fp = fopen(link, "r");
@@ -214,12 +215,12 @@ static void printPuzzle(char **grid) {
  * @return a 2d pointer of the grid
  */
 static char **createGrid(char *link) {
-    char **wordSearchGrid, letter[3], *line;
+    char **grid, letter[3], *line;
     FILE *gridFile;
     gridFile = fopen(link, "r");
     fileExists(gridFile, link);
     fscanf(gridFile, "%d %d", &width, &height);
-    wordSearchGrid = malloc(width * height * sizeof(wordSearchGrid));
+    grid = malloc(width * height * sizeof(grid));
     for (int i = 0; i < height; ++i) {
         line = malloc(height * sizeof(char));
         for (int j = 0; j < height; ++j) {
@@ -227,11 +228,11 @@ static char **createGrid(char *link) {
             line[j] = *letter;
         }
         line[height] = '\0';
-        *(wordSearchGrid + i) = line;
+        *(grid + i) = line;
     }
-    *(*(wordSearchGrid) + width) = '\0';
+    *(*(grid) + width) = '\0';
     fclose(gridFile);
-    return wordSearchGrid;
+    return grid;
 }
 
 int main(int argc, char *argv[]) {
