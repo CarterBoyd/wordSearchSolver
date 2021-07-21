@@ -154,13 +154,19 @@ static void bottomLeftToTopRight(char **grid) {
     }
 }
 
-static void topRightToBottomLeft(char **grid) { // apd, zwyo ...
+static void topRightToBottomLeft(char **grid) {
     char line[width + 1];
     int i, j, k;
     printf("\nLooking for words going diagonally from the top right to the bottom left\n");
     for (i = width - MIN_SIZE - 1; i < width; ++i) {
         for (j = i, k = 0; j >= 0; --j, ++k)
             line[k] = grid[j][height - k - 1];
+        line[k] = '\0';
+        splitLine(line);
+    }
+    for (i = height - 1; i > 2; --i) {
+        for (j = i, k = 0; j >= 0; --j, ++k)
+            line[k] = grid[height - k - 1][j - 1];
         line[k] = '\0';
         splitLine(line);
     }
