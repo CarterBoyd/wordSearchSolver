@@ -11,5 +11,5 @@ words. The size of the dictionary file will be what determines how long the prog
 on my laptop when making this and using a 40 x 40 sized grid.
 
 # Profiler
-![WordSeearchSolverflamegraph](https://user-images.githubusercontent.com/70919992/126409549-e4da42dc-d772-4a57-a5f4-6e9c7d76665b.png)
+![WordSearchSolverProfiler](https://user-images.githubusercontent.com/70919992/126510637-4df6c013-53e7-4e12-9971-7627f1816427.png)
 This is what the profiler graph was able to look like with the dictionary file and a 40 x 40 grid
