@@ -9,6 +9,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+
 #define MIN_SIZE 3
 #define UPPERCASE_BEGIN 65
 #define UPPERCASE_END 90
