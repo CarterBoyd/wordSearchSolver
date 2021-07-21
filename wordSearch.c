@@ -136,6 +136,14 @@ static void bottomRightToTopLeft(char **grid) {
     }
 }
 
+static void bottomLeftToTopRight(char **grid) {
+
+}
+
+static void topRightToBottomLeft(char **grid) {
+
+}
+
 /**
  * Makes sure that the file exists if not then it will end the program
  * @param pFile the file
