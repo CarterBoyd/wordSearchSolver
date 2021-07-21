@@ -136,6 +136,10 @@ static void bottomRightToTopLeft(char **grid) {
     }
 }
 
+/**
+ * Goes through the grid from a diagonal bottom left to top right method
+ * @param grid the grid that will be parsed
+ */
 static void bottomLeftToTopRight(char **grid) {
     char line[width + 1];
     int i, j, k;
@@ -154,6 +158,10 @@ static void bottomLeftToTopRight(char **grid) {
     }
 }
 
+/**
+ * Goes through the grid from a diagonal top right to a bottom left method
+ * @param grid the grid that will be parsed
+ */
 static void topRightToBottomLeft(char **grid) {
     char line[width + 1];
     int i, j, k;
