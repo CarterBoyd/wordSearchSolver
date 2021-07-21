@@ -9,7 +9,7 @@
  */
 static void checkLine(const char *word) {
     struct dictionary *dictPtr;
-    for (dictPtr = list[(int) *word - 97]; dictPtr != NULL; dictPtr = dictPtr->next)
+    for (dictPtr = list[(int) *word - ASCII_LOWERCASE]; dictPtr != NULL; dictPtr = dictPtr->next)
         if (strcmp(dictPtr->word, word) == 0) {
             printf("%s\n", dictPtr->word);
             return;
@@ -199,8 +199,8 @@ static void fileExists(FILE *pFile, char *string) {
 static void addToList(const char *line) {
     struct dictionary *newWord = malloc(sizeof(struct dictionary));
     newWord->word = strdup(line);
-    newWord->next = list[(int) *line - 97];
-    list[(int) *line - 97] = newWord;
+    newWord->next = list[(int) *line - ASCII_LOWERCASE];
+    list[(int) *line - ASCII_LOWERCASE] = newWord;
 }
 
 /**
@@ -209,7 +209,7 @@ static void addToList(const char *line) {
  */
 void createDictionary(char *link) {
     int i;
-    for (i = 0; i < 26; ++i)
+    for (i = 0; i < ALPHABET_SIZE; ++i)
         list[i] = NULL;
 
     FILE *fp = fopen(link, "r");
@@ -217,8 +217,8 @@ void createDictionary(char *link) {
     char *line = NULL;
     size_t sz;
     while (getline(&line, &sz, fp) != EOF) {
-        if (*line >= 65 && *line <= 90)
-            *line += 32;
+        if (*line >= UPPERCASE_BEGIN && *line <= UPPERCASE_END)
+            *line += TOLOWER_CASE;
         line[strlen(line) - 1] = '\0';
         addToList(line);
     }
@@ -231,7 +231,7 @@ void createDictionary(char *link) {
  */
 static void freeAll() {
     struct dictionary *listPtr, *temp;
-    for (int i = 0; i < 26; ++i) {
+    for (int i = 0; i < ALPHABET_SIZE; ++i) {
         temp = list[i];
         while (temp != NULL) {
             listPtr = temp->next;

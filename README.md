@@ -10,6 +10,13 @@ look like in order for the program to work.
 words. The size of the dictionary file will be what determines how long the program will run. It took 2 seconds
 on my laptop when making this and using a 40 x 40 sized grid.
 
+# Usage
+The program requires 2 arguments in order to work, the first argument being the word search txt file you wish to use.
+The second argument is the dictionary file you want to use. Any extra Arguments will be ignored. When making a word
+search text file make sure that the first two lines are the size of the width and height (in that order) so that the
+program can perform boundary checks. The dictionary file make sure every word is on its own line the program will not be
+able to separate words on the same line.
+
 # Profiler
-![WordSeearchSolverflamegraph](https://user-images.githubusercontent.com/70919992/126409549-e4da42dc-d772-4a57-a5f4-6e9c7d76665b.png)
+![WordSearchSolverProfiler](https://user-images.githubusercontent.com/70919992/126510637-4df6c013-53e7-4e12-9971-7627f1816427.png)
 This is what the profiler graph was able to look like with the dictionary file and a 40 x 40 grid
