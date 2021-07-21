@@ -279,19 +279,27 @@ static char **createGrid(char *link) {
     return grid;
 }
 
+/**
+ * linked function that will go through every algorithm of searching through the graph
+ * @param grid the grid that will be searched for
+ */
+static void findWords(char **grid) {
+    leftToRight(grid);
+    rightToLeft(grid);
+    topToBottom(grid);
+    bottomToTop(grid);
+    topLeftToBottomRight(grid);
+    bottomRightToTopLeft(grid);
+    bottomLeftToTopRight(grid);
+    topRightToBottomLeft(grid);
+}
+
 int main(int argc, char *argv[]) {
     if (argc > 2) {
         createDictionary(argv[2]);
         char **grid = createGrid(argv[1]);
         printPuzzle(grid);
-        leftToRight(grid);
-        rightToLeft(grid);
-        topToBottom(grid);
-        bottomToTop(grid);
-        topLeftToBottomRight(grid);
-        bottomRightToTopLeft(grid);
-        bottomLeftToTopRight(grid);
-        topRightToBottomLeft(grid);
+        findWords(grid);
         freeAll();
         return EXIT_SUCCESS;
     }
