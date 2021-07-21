@@ -96,7 +96,7 @@ static void bottomToTop(char **grid) {
  * Goes through the grid from a diagonal top left to bottom right method
  * @param grid the grid that will be parsed
  */
-static void bottomLeftToTopRightDiag(char **grid) {
+static void topLeftToBottomRight(char **grid) {
     char line[width + 1];
     int i, j, k;
     printf("\nLooking for words going diagonally left to right\n");
@@ -115,10 +115,10 @@ static void bottomLeftToTopRightDiag(char **grid) {
 }
 
 /**
- * Goes through the grid from a diagonal top right to bottom left method
+ * Goes through the grid from a diagonal bottom right to top left method
  * @param grid the grid that will be parsed
  */
-static void topRightToBottomLeftDiag(char **grid) {
+static void bottomRightToTopLeft(char **grid) {
     char line[width + 1];
     int i, j, k;
     printf("\nLooking for words going diagonally right to left\n");
@@ -244,8 +244,8 @@ int main(int argc, char *argv[]) {
         rightToLeft(grid);
         topToBottom(grid);
         bottomToTop(grid);
-        bottomLeftToTopRightDiag(grid);
-        topRightToBottomLeftDiag(grid);
+        topLeftToBottomRight(grid);
+        bottomRightToTopLeft(grid);
         freeAll();
         return EXIT_SUCCESS;
     }
