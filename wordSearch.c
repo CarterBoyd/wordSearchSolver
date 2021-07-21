@@ -146,6 +146,12 @@ static void bottomLeftToTopRight(char **grid) {
         line[k] = '\0';
         splitLine(line);
     }
+    for (i = 1; i < height - MIN_SIZE + 1; ++i) {
+        for (j = i, k = 0; j < height; ++j, ++k)
+            line[k] = grid[k][j];
+        line[k] = '\0';
+        splitLine(line);
+    }
 }
 
 static void topRightToBottomLeft(char **grid) {
