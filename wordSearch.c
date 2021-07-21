@@ -137,7 +137,15 @@ static void bottomRightToTopLeft(char **grid) {
 }
 
 static void bottomLeftToTopRight(char **grid) {
-
+    char line[width + 1];
+    int i, j, k;
+    printf("\nLooking for words going diagonally from the bottom left to the top right\n");
+    for (i = width - MIN_SIZE; i >= 0; --i) {
+        for (j = i, k = 0; j < height; ++j, ++k)
+            line[k] = grid[j][k];
+        line[k] = '\0';
+        splitLine(line);
+    }
 }
 
 static void topRightToBottomLeft(char **grid) {
@@ -254,6 +262,8 @@ int main(int argc, char *argv[]) {
         bottomToTop(grid);
         topLeftToBottomRight(grid);
         bottomRightToTopLeft(grid);
+        bottomLeftToTopRight(grid);
+        topRightToBottomLeft(grid);
         freeAll();
         return EXIT_SUCCESS;
     }
